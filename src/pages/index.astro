@@ -1,17 +1,101 @@
 ---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
 
+interface Publication {
+  title: string;
+  authors: string;
+  venue: string;
+  link?: string;   // URL the title points to
+  cite?: string;
+  blog?: string;
+  code?: string;
+  figure?: string;
+}
+
+const publications: Publication[] = [
+  { title: "Optimal Linear Baselines for Scientific Machine Learning",
+    authors: 'Alexander DeLise, <span class="me">Kyle Loh</span>, Krish Patel, Meredith Teague, Andrea Arnold, Matthias Chung',
+    venue: "Foundations of Data Science",
+    link: "https://www.aimsciences.org/article/doi/10.3934/fods.2026012", 
+	blog: "https://www.math.emory.edu/site/cmds-reuret/projects/2025-model-aware/",
+	code: "https://github.com/Kyleloh1/CMDS-REU-MADDI", 
+	figure: "/encoder-decoder.png"
+},
+  { title: "Decentralized Conformal Novelty Detection via Quantized Model Exchange",
+    authors: '<span class="me">Kyle Loh</span>, Yu Xiang',
+    venue: "arXiv",
+    link: "https://arxiv.org/abs/2605.08263", 
+	code:  "https://github.com/Kyleloh1/Decentralized-Conformal-Novelty-Detection"},
+];
+
+const interests = [
+  { heading: "Rigorous Numerics for Optimizers",
+    body: `Modern neural networks are typically trained with adaptive optimizers like RMSProp and Adam, which often operate in a chaotic regime called the 
+	Edge of Stability. My work uses computer-assisted proofs to rigorously validate quasiperiodic and chaotic structures, and their corresponding routes to chaos in these optimizers. Eventually, I hope to develop
+	a comprehensive theory explaining which mechanisms in an adaptive optimizer drive chaotic behavior. If you're interested, check out these visualizers 
+	for <a href="https://kyleloh1.github.io/RMSProp/" target="_blank" rel="noopener">RMSProp</a> and
+	 <a href="https://kyleloh1.github.io/Adam/" target="_blank" rel="noopener">Adam</a>.`,
+    figure: "/edge-of-stability.png" },
+  { heading: "Conformal Inference", 
+	body: `Conformal inference offers a distribution-free way to flag anomalous data with rigorous, finite-sample statistical guarantees. I am developing conformal inference
+	frameworks that bound the false discovery rate when various constraints are placed -- for example, decentralization, limited communication bandwidth, non-exchangeability.` },
+];
+
+const awards = [
+  "Barry M. Goldwater Scholarship (2026)",
+  "Phi Kappa Phi Scholarship (2026)",
+  "OURI Research Grant (2026)",
+  "Mu Alpha Theta Summer Grant (2024)",
+  // …add the rest
+];
 ---
+<Layout title="Kyle Loh">
+	<section id="about">
+		<h2>About Me</h2>
+		<p>I am currently a 4th-year joint B.S.-M.S. student at Florida Atlantic University studying Applied Mathematics, where I am working 
+		with <a href="https://www.math.fau.edu/people/faculty/mirelesjames.php" target="_blank" rel="noopener">Jason Mireles-James</a> and <a href="https://sites.google.com/site/yuxianghomepage/" target="_blank" rel="noopener">Yu Xiang</a>.</p>
+	</section>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+  <section id="research">
+	<h2>Research Interests</h2>
+	<p>My research is focused on the mathematical foundations of machine learning and using these principles to develop better algorithms.</p>
+	{interests.map((it) => (
+		<article class="card">
+		  <div class="card-body">
+			<h3 style="color:#1a1a1a">{it.heading}</h3>
+			<p set:html={it.body} />
+		  </div>
+		  {it.figure && <img class="figure" src={it.figure} alt="" />}
+		</article>
+	  ))}
+  </section>
+
+  <section id="publications">
+	<h2>Publications</h2>
+	{publications.map((p) => (
+	  <article class="card">
+		<div class="card-body">
+			<h3>
+  				{p.link
+    				? <a href={p.link} target="_blank" rel="noopener">{p.title}</a>
+    				: p.title}
+			</h3>
+		  <p class="authors" set:html={p.authors} />
+		  <div class="tags">
+			<span class="tag tag-venue">{p.venue}</span>
+			{p.blog && <a class="tag tag-blog" href={p.blog}>Blog Post</a>}
+			{p.code && <a class="tag tag-code" href={p.code}>Code</a>}
+			{p.cite && <a class="tag tag-cite" href={p.cite}>Cite</a>}
+		  </div>
+		</div>
+		{p.figure && <img class="figure" src={p.figure} alt="" />}
+	  </article>
+	))}
+  </section>
+
+  <section id="awards">
+    <h2>Awards</h2>
+    <ul>{awards.map((a) => <li>{a}</li>)}</ul>
+  </section>
+</Layout>

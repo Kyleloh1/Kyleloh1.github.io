@@ -1,0 +1,65 @@
+---
+
+// src/layouts/Layout.astro
+import { Icon } from 'astro-icon/components';
+import '../styles/global.css';
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <img src="/profile.jpg" alt="Kyle Loh" class="photo" />
+      <h1>Kyle Loh</h1>
+
+      <div class="icons">
+        <a href="https://github.com/Kyleloh1" class="icon-btn" aria-label="GitHub">
+          <Icon name="mdi:github" />
+        </a>
+        <a href="https://scholar.google.com/citations?user=JsXe-TgAAAAJ&hl=en" class="icon-btn" aria-label="Google Scholar">
+          <Icon name="simple-icons:googlescholar" />
+        </a>
+        <a href="https://www.youtube.com/channel/UC_G7YxEksu7C9z5A08fdv7g" class="icon-btn" aria-label="YouTube">
+          <Icon name="mdi:youtube" />
+        </a>
+        <a href="mailto:kloh2023@fau.edu" class="icon-btn" aria-label="Email">
+          <Icon name="mdi:email" />
+        </a>
+      </div>
+
+      <nav>
+        <a href="/#about">About Me</a>
+        <a href="/#research">Research</a>
+        <a href="/#publications">Publications</a>
+        <a href="/#awards">Awards</a>
+        <a href="/blogs">Blogs</a>
+        <a href="/teaching">Teaching</a>
+        <a href="/cv.pdf" target="_blank" rel="noopener">CV</a>   <!-- new -->
+      </nav>   
+    </aside>
+
+    <main class="content">
+      <slot />
+    </main>
+
+    <style>
+      .icons { display: flex; gap: 0.5rem; justify-content: center; }
+      .icon-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 3rem; height: 3rem;
+        background: #ffffff; border-radius: 0.6rem;
+        color: #1a1a1a; transition: transform 0.15s ease;
+      }
+      .icon-btn:hover { transform: translateY(-2px); }
+      .icon-btn svg { width: 1.6rem; height: 1.6rem; }
+    </style>
+  </body>
+</html>

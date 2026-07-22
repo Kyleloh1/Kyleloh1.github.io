@@ -1,0 +1,21 @@
+---
+// src/pages/blogs.astro
+import Layout from '../layouts/Layout.astro';
+
+const posts = [
+  { title: "Filler", date: "July 2526",
+    excerpt: "A short summary of the post.", href: "#" },
+];
+---
+<Layout title="Blogs — Kyle Loh">
+  <section id="blogs">
+    <h2>Blogs</h2>
+    {posts.map((post) => (
+      <article class="post">
+        <h3><a href={post.href}>{post.title}</a></h3>
+        <p class="date">{post.date}</p>
+        <p>{post.excerpt}</p>
+      </article>
+    ))}
+  </section>
+</Layout>
